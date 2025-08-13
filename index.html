@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Axtroo</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 0; padding: 0; }
+    header, footer { background-color: #1a73e8; color: white; padding: 1rem; text-align: center; }
+    nav a { margin: 0 1rem; color: white; text-decoration: none; cursor: pointer; }
+    section { padding: 2rem; }
+    .form input, .form button { display: block; margin: 0.5rem 0; padding: 0.5rem; width: 100%; max-width: 300px; }
+    .product-card, .dashboard-card { border: 1px solid #ddd; padding: 1rem; margin: 1rem 0; }
+    .product-card img { width: 100%; max-width: 150px; }
+    .grid { display: flex; flex-wrap: wrap; gap: 1rem; }
+    .hidden { display: none; }
+    button { background-color: #1a73e8; color: white; border: none; cursor: pointer; padding: 0.5rem 1rem; }
+    .logo-container { display: flex; align-items: center; justify-content: center; gap: 1rem; }
+    .logo-container img { height: 50px; border-radius: 5px; }
+    .logo-container h1 { margin: 0; font-size: 2rem; }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="logo-container">
+    <img src="axtroo-logo.jpeg" alt="Axtroo Logo" />
+    <h1>Axtroo</h1>
+  </div>
+  <nav>
+    <a onclick="showSection('home')">Home</a>
+    <a onclick="showSection('login')">Login</a>
+    <a onclick="showSection('signup')">Sign Up</a>
+    <a onclick="showSection('dashboard')">Seller Dashboard</a>
+    <a onclick="showSection('admin')">Admin Panel</a>
+  </nav>
+</header>
+
+<!-- Home Section -->
+<section id="home">
+  <h2>Welcome to Axtroo</h2>
+  <p>Your trusted online marketplace in Nepal</p>
+  <div class="grid">
+    <div class="product-card">
+      <img src="https://via.placeholder.com/150" alt="Product" />
+      <h4>Product Name</h4>
+      <p>Rs. 999</p>
+      <button>Add to Cart</button>
+    </div>
+  </div>
+  <button onclick="showSection('payment')">Pay with Khalti</button>
+</section>
+
+<!-- Login Section -->
+<section id="login" class="hidden">
+  <h2>Login to Axtroo</h2>
+  <div class="form">
+    <input type="email" placeholder="Email" />
+    <input type="password" placeholder="Password" />
+    <button>Login</button>
+  </div>
+</section>
+
+<!-- Signup Section -->
+<section id="signup" class="hidden">
+  <h2>Create Your Axtroo Account</h2>
+  <div class="form">
+    <input type="text" placeholder="Full Name" />
+    <input type="email" placeholder="Email" />
+    <input type="password" placeholder="Password" />
+    <button>Sign Up</button>
+  </div>
+</section>
+
+<!-- Seller Dashboard -->
+<section id="dashboard" class="hidden">
+  <h2>Axtroo Seller Dashboard</h2>
+  <div class="dashboard-card">
+    <h4>Add Product</h4>
+    <input type="text" placeholder="Product Name" />
+    <input type="number" placeholder="Price" />
+    <input type="text" placeholder="Image URL" />
+    <button>Add Product</button>
+  </div>
+  <div class="dashboard-card">
+    <h4>Orders</h4>
+    <p>No orders yet.</p>
+  </div>
+</section>
+
+<!-- Admin Panel -->
+<section id="admin" class="hidden">
+  <h2>Axtroo Admin Panel</h2>
+  <div class="dashboard-card">
+    <h4>Manage Products</h4>
+    <p>Product 1 - Rs. 999 <button>Delete</button></p>
+  </div>
+  <div class="dashboard-card">
+    <h4>Approve Sellers</h4>
+    <p>Seller A <button>Approve</button></p>
+  </div>
+</section>
+
+<!-- Payment Section -->
+<section id="payment" class="hidden">
+  <h2>Pay with Khalti</h2>
+  <button id="pay-button">Pay Rs. 1000</button>
+</section>
+
+<footer>
+  <p>&copy; 2025 Axtroo. All rights reserved.</p>
+</footer>
+
+<!-- Khalti Integration -->
+<script src="https://khalti.com/static/khalti-checkout.js"></script>
+<script>
+  var config = {
+    publicKey: "test_public_key_xxx",
+    productIdentity: "1234567890",
+    productName: "Cool Gadget",
+    productUrl: "http://axtroo.com/product/123",
+    amount: 1000,
+    eventHandler: {
+      onSuccess(payload) { alert("Payment Successful!"); },
+      onError(error) { alert("Payment Failed!"); },
+    }
+  };
+  var checkout = new KhaltiCheckout(config);
+  document.getElementById("pay-button").onclick = function () {
+    checkout.show({ amount: 1000 });
+  };
+
+  function showSection(id) {
+    document.querySelectorAll("section").forEach(s => s.classList.add("hidden"));
+    document.getElementById(id).classList.remove("hidden");
+  }
+</script>
+
+</body>
+</html>
